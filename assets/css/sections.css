@@ -1,7 +1,7 @@
 /* Services, process, work, testimonials, pricing, FAQ, CTA, footer. */
 
 /* ---------- Work ---------- */
-.work__grid { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.work__grid { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 16px; }
 .case { display: flex; flex-direction: column; overflow: hidden; }
 .case__art {
   padding: 24px 24px 8px; border-bottom: 1px solid var(--line);
@@ -18,7 +18,7 @@
 .pulse { fill: var(--accent); stroke: none; }
 
 /* ---------- Pricing ---------- */
-.pricing__grid { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: stretch; }
+.pricing__grid { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px; align-items: stretch; }
 .plan { padding: 32px; display: flex; flex-direction: column; }
 .plan:hover { box-shadow: none; border-color: rgba(255, 255, 255, 0.28); }
 .plan--featured {
@@ -46,7 +46,7 @@
 .plan .btn { margin-top: 32px; }
 
 /* ---------- FAQ ---------- */
-.faq__layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(32px, 6vw, 80px); }
+.faq__layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: clamp(32px, 6vw, 80px); }
 .faq__title { max-width: 12ch; }
 .faq__list { border-top: 1px solid var(--line); }
 .faq__item { border-bottom: 1px solid var(--line); }
@@ -111,3 +111,22 @@ html:not(.js) .faq__panel { grid-template-rows: 1fr; }
   color: var(--text-muted); font-size: 14px;
 }
 .site-footer__links a[href^="mailto:"] { font-size: 14px; }
+
+/* ---------- Responsive hardening ---------- */
+/* FAQ rows: let long questions wrap instead of pushing the icon past the edge (320px phones) */
+.faq__trigger > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.faq__trigger { min-width: 0; }
+.faq__a { padding-right: 0; }
+
+/* Footer: explicit column widths so the email always fits; links may wrap as a last resort */
+.site-footer__grid { grid-template-columns: 2fr 1.4fr 1.2fr 1.9fr; }
+.site-footer__intro { grid-column: auto; }
+.site-footer__grid > * { min-width: 0; }
+.site-footer__links a { overflow-wrap: anywhere; }
+@media (max-width: 860px) {
+  .site-footer__grid { grid-template-columns: 1fr 1fr; }
+  .site-footer__intro { grid-column: 1 / -1; }
+}
+@media (max-width: 480px) {
+  .site-footer__grid { grid-template-columns: 1fr; }
+}
