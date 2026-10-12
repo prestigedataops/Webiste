@@ -1,0 +1,95 @@
+/* Motion layer. Loaded last. All animation is disabled by base.css when the visitor prefers reduced motion,
+ * and anything that HIDES content before animating is gated behind html.motion (added by motion.js),
+ * so the page is fully visible with JS off or if a script fails. */
+
+/* ---------- Hero entrance (CSS only) ---------- */
+.hero-in { animation: hero-in 1s var(--ease-out) backwards; animation-delay: calc(var(--d, 0) * 1ms); }
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Shimmer across the accent word in the headline */
+.hero__title em {
+  background: linear-gradient(100deg, #4f8cff 30%, #b7d0ff 50%, #4f8cff 70%) 0 0 / 250% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: shimmer 7s ease-in-out 1.6s infinite;
+}
+@keyframes shimmer { 0%, 55%, 100% { background-position: 100% 0; } 85% { background-position: 0 0; } }
+
+/* Pinging status dot in badges */
+.badge .dot { animation: ping 2.6s ease-in-out infinite; }
+@keyframes ping {
+  0%, 100% { box-shadow: 0 0 12px 2px rgba(79, 140, 255, 0.9); }
+  50% { box-shadow: 0 0 0 0 rgba(79, 140, 255, 0), 0 0 18px 6px rgba(79, 140, 255, 0.25); }
+}
+
+/* ---------- Scroll progress (element created by motion.js) ---------- */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 70; pointer-events: none; }
+.scroll-progress span { display: block; height: 100%; background: var(--climate); transform: scaleX(0); transform-origin: left; }
+
+/* ---------- Card spotlight following the cursor (hover devices only) ----------
+ * Applied as a background on the hovered card only: no pseudo-element, no extra stacking context per card. */
+.card { position: relative; }
+@media (hover: hover) {
+  .card:hover { background-image: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(79, 140, 255, 0.11), transparent 60%); }
+}
+
+/* ---------- Buttons ---------- */
+.btn span[aria-hidden="true"] { display: inline-block; transition: transform 0.3s var(--ease-out); }
+.btn:hover span[aria-hidden="true"] { transform: translate(3px, -3px); }
+
+/* ---------- Final CTA orb: orbiting ring (transform-only, runs on the compositor) ---------- */
+.cta__button { isolation: isolate; }
+.cta__button::before {
+  content: ""; position: absolute; inset: -12px; border-radius: 50%; z-index: -1; pointer-events: none;
+  background: conic-gradient(transparent 55%, var(--cool), var(--warm), transparent);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  animation: orb-spin 8s linear infinite;
+}
+@keyframes orb-spin { to { transform: rotate(360deg); } }
+
+/* ---------- Stats: subtle lift when counted ---------- */
+.stat { transition: background 0.4s; }
+.stat:hover { background: rgba(255, 255, 255, 0.025); }
+
+/* =====================================================================
+ * Hero motion: word-by-word headline, cursor spotlight, scroll depth. Variables --sx/--sy
+ * (pointer px) and --hs (scroll 0..1) are
+ * set on .hero by motion.js.
+ * ===================================================================== */
+
+/* Headline: each word rises in, staggered */
+.hero__title .w { display: inline-block; animation: word-in 0.95s var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 90ms + 150ms); }
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(0.5em) rotate(2deg); }
+  to { opacity: 1; transform: none; }
+}
+/* The gradient is applied per word so each word can animate on its own */
+.hero__title .fade-text { background: none; -webkit-background-clip: border-box; background-clip: border-box; -webkit-text-fill-color: initial; color: inherit; }
+.hero__title .fade-text .w {
+  background: linear-gradient(180deg, #fff 10%, var(--text-muted) 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+}
+.hero__title .fade-text em.w {
+  background: linear-gradient(100deg, #4f8cff 30%, #b7d0ff 50%, #4f8cff 70%) 0 0 / 250% 100%;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+  animation: word-in 0.95s var(--ease-out) backwards, shimmer 7s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 90ms + 150ms), 2.6s;
+}
+
+/* Cursor spotlight: a small soft circle moved with transform (compositor only) */
+.hero__spot {
+  position: absolute; left: 0; top: 0; width: 520px; height: 520px; border-radius: 50%; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle, rgba(79, 140, 255, 0.13), transparent 62%);
+  transition: opacity 0.5s;
+}
+.hero:hover .hero__spot { opacity: 1; }
+
+/* Pull the full stop in towards the italic word it follows */
+.hero__title .fade-text em.w + .w { margin-left: -0.14em; }
+
+/* Looping animations are paused while their section is offscreen (class set by motion.js) */
+.is-offscreen, .is-offscreen * { animation-play-state: paused !important; }

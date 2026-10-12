@@ -1,0 +1,25 @@
+/* Per-vertical accents. The design system is shared; a new trade overrides only these variables.
+ * Default palette: "cool" blue and "warm" amber. Override under a [data-vertical="..."] selector for an industry. */
+:root,
+[data-vertical="default"] {
+  --cool: #4f8cff;
+  --warm: #ffb35c;
+  --cool-glow: rgba(79, 140, 255, 0.35);
+  --warm-glow: rgba(255, 179, 92, 0.3);
+  --climate: linear-gradient(90deg, var(--cool), var(--warm));
+}
+
+/* Thin blue→amber line used as a section divider and accent */
+.climate-rule { display: block; width: 56px; height: 2px; border-radius: 2px; background: var(--climate); }
+
+.tag-cool, .tag-warm {
+  display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: var(--radius-pill);
+  font-family: var(--font-label); font-weight: 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid;
+}
+.tag-cool { color: #a8c6ff; border-color: rgba(79, 140, 255, 0.5); background: rgba(79, 140, 255, 0.1); }
+.tag-warm { color: #ffd199; border-color: rgba(255, 179, 92, 0.5); background: rgba(255, 179, 92, 0.1); }
+
+/* "Built for" audience chips (replaces the placeholder client logos) */
+.audience { margin: 24px auto 0; max-width: 1000px; padding: 24px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.audience li { padding: 8px 18px; border-radius: var(--radius-pill); border: 1px solid var(--line-strong); color: var(--text-muted); font-size: 15px; }
+

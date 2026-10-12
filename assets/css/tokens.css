@@ -1,0 +1,35 @@
+/* Design tokens — single source of truth for colour, type, spacing and motion. */
+:root {
+  /* Colour */
+  --bg: #07070a;
+  --bg-raised: #0c0c10;
+  --bg-raised-2: #12121a;
+  --text: #f2f1ee;
+  --text-strong: #ffffff;
+  --text-muted: #8a8a93; /* 5.9:1 on --bg, passes WCAG AA */
+  --accent: #4f8cff;
+  --accent-glow: rgba(79, 140, 255, 0.35);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --line-hover: rgba(255, 255, 255, 0.4);
+  --surface: rgba(255, 255, 255, 0.02);
+  --surface-hover: rgba(255, 255, 255, 0.05);
+
+  /* Typography */
+  --font-sans: "Plus Jakarta Sans", "Helvetica Neue", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-sans);
+  --font-serif: "Fraunces", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-label: var(--font-sans); /* small uppercase labels: sans caps, semibold, wide tracking */
+
+  /* Layout */
+  --container: 1200px;
+  --gutter: clamp(16px, 4vw, 24px);
+  --header-h: 72px;
+  --section-y: clamp(64px, 10vw, 128px);
+  --radius-card: 20px;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --focus-ring: 2px solid var(--accent);
+}

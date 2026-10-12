@@ -1,0 +1,12 @@
+{
+  "name": "Prestige DataOps",
+  "short_name": "Prestige",
+  "description": "AI workflows and agents that remove manual work.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#07070a",
+  "theme_color": "#07070a",
+  "icons": [
+    { "src": "assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

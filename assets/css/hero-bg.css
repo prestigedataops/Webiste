@@ -1,0 +1,14 @@
+/* Hero background: "aurora". Soft blue (cool) and amber (warm) light that slowly drifts.
+ * Performance: plain radial gradients animated with transform only (no blur filters, no blend modes), so it runs on the
+ * GPU compositor. Motion is disabled by base.css for reduced motion and paused offscreen by motion.js. */
+
+.hero__bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+
+.blob { position: absolute; display: block; border-radius: 50%; }
+.b1 { left: -14%; top: -26%; width: min(980px, 76vw); aspect-ratio: 1; background: radial-gradient(circle, rgba(79, 140, 255, 0.46), rgba(79, 140, 255, 0.14) 38%, transparent 68%); animation: aurora-1 24s ease-in-out infinite alternate; }
+.b2 { right: -16%; top: -8%; width: min(900px, 70vw); aspect-ratio: 1; background: radial-gradient(circle, rgba(255, 179, 92, 0.32), rgba(255, 179, 92, 0.1) 38%, transparent 68%); animation: aurora-2 28s ease-in-out infinite alternate; }
+.b3 { left: 28%; top: 34%; width: min(780px, 62vw); aspect-ratio: 1; background: radial-gradient(circle, rgba(88, 190, 255, 0.24), rgba(88, 190, 255, 0.07) 40%, transparent 68%); animation: aurora-3 32s ease-in-out infinite alternate; }
+
+@keyframes aurora-1 { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(9vw, 8vh, 0) scale(1.18); } }
+@keyframes aurora-2 { from { transform: translate3d(0, 0, 0) scale(1.08); } to { transform: translate3d(-8vw, 10vh, 0) scale(0.94); } }
+@keyframes aurora-3 { from { transform: translate3d(-6vw, 0, 0) scale(0.96); } to { transform: translate3d(8vw, -6vh, 0) scale(1.14); } }
