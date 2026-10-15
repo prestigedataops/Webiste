@@ -1,0 +1,133 @@
+---
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/instrument-serif/400-italic.css";
+import "@fontsource-variable/inter/index.css";
+import "../styles/tokens.css";
+import "../styles/base.css";
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "../data/site.js";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Extra JSON-LD nodes for this page, merged with the sitewide Organization/WebSite graph. */
+  schema?: Record<string, unknown>[];
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { title, description, schema = [], ogImage = "/og-image.png", noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImageUrl = new URL(ogImage, SITE.url).href;
+
+const graph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE.url}/#organization`,
+      name: SITE.name,
+      url: SITE.url,
+      logo: `${SITE.url}/favicon.svg`,
+      email: SITE.email,
+      description: "AI automation for HVAC companies: call answering, lead follow-up, maintenance agreements and reviews.",
+      ...(SITE.phone ? { telephone: SITE.phone } : {}),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE.url}/#website`,
+      url: SITE.url,
+      name: SITE.name,
+      inLanguage: "en-US",
+      publisher: { "@id": `${SITE.url}/#organization` },
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${canonical}#webpage`,
+      url: canonical,
+      name: title,
+      description,
+      isPartOf: { "@id": `${SITE.url}/#website` },
+      inLanguage: "en-US",
+    },
+    ...schema,
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta
+      name="robots"
+      content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}
+    />
+    <meta name="theme-color" content="#0b1220" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Prestige DataOps: AI automation for HVAC companies" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
+    {SITE.gaId && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${SITE.gaId}`} />}
+    {
+      SITE.gaId && (
+        <script is:inline define:vars={{ gaId: SITE.gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag("js", new Date());
+          gtag("config", gaId);
+        </script>
+      )
+    }
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <a class="mobile-cta" href="/book/" data-track="book_click" data-track-location="mobile_bar">Book your free audit</a>
+    <script>
+      import "../scripts/site.js";
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  .mobile-cta {
+    position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 40;
+    display: none; align-items: center; justify-content: center; min-height: 52px; border-radius: var(--radius);
+    background: var(--brass); color: var(--ink); font-weight: 600; font-size: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+  @media (max-width: 860px) {
+    .mobile-cta { display: flex; }
+    body { padding-bottom: 76px; }
+  }
+</style>

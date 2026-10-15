@@ -1,0 +1,31 @@
+---
+import { SITE } from "../data/site.js";
+interface Props { title?: string; text?: string }
+const {
+  title = "See what your phones are costing you.",
+  text = "A free 30-minute audit. You leave with a clear list of what to automate first, whether or not we work together.",
+} = Astro.props;
+---
+
+<section class="cta theme-dark" id="cta" aria-labelledby="cta-title">
+  <div class="container cta__inner">
+    <div>
+      <h2 class="display cta__title" id="cta-title" data-reveal>{title}</h2>
+      <p class="lede" data-reveal>{text}</p>
+    </div>
+    <div class="cta__actions" data-reveal>
+      <a class="btn" href="/book/" data-track="book_click" data-track-location="cta_band">Get your free missed-call audit <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="cta__mail" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { background: var(--bg-alt); color: var(--fg); padding: clamp(72px, 9vw, 120px) 0; border-top: 1px solid var(--line); }
+  .cta__inner { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center; }
+  .cta__title { font-size: clamp(38px, 5vw, 60px); max-width: 16ch; margin-bottom: 20px; }
+  .cta__actions { display: grid; gap: 18px; justify-items: start; }
+  .cta__mail { color: var(--fg-muted); border-bottom: 1px solid var(--line); padding-bottom: 2px; font-size: 15px; }
+  .cta__mail:hover { color: var(--fg); }
+  @media (max-width: 860px) { .cta__inner { grid-template-columns: 1fr; } }
+</style>

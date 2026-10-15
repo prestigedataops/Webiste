@@ -1,0 +1,30 @@
+/* Pricing page extras: step connector, "what affects your price" strip, reassurance line. */
+
+/* "+" joining Step 1 and Step 2 (desktop only) */
+.pricing__grid--two { position: relative; }
+@media (min-width: 861px) {
+  .pricing__grid--two::after {
+    content: "+"; position: absolute; left: 50%; top: 88px; z-index: 2; transform: translateX(-50%);
+    width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%;
+    background: var(--bg); border: 1px solid rgba(79, 140, 255, 0.5); color: #a8c6ff; font-size: 20px; line-height: 1;
+    box-shadow: 0 0 0 5px rgba(79, 140, 255, 0.1);
+  }
+}
+.plan__features li:last-child { margin-bottom: 0; }
+
+.factors { margin-top: clamp(28px, 4vw, 40px); display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.factor { position: relative; padding: 24px 24px 28px; }
+.factor__n { font-family: var(--font-label); font-weight: 600; font-size: 12px; letter-spacing: 0.14em; color: #a8c6ff; }
+.factor h3 { margin-top: 16px; font-size: 20px; line-height: 1.2; letter-spacing: -0.015em; font-weight: 600; }
+.factor p { margin-top: 8px; color: var(--text-muted); font-size: 16px; }
+
+.assure {
+  margin-top: 16px; display: flex; align-items: center; gap: 14px; padding: 20px 24px; border-radius: 14px; border: 1px solid var(--line);
+  border-left: 2px solid rgba(79, 140, 255, 0.55); background: linear-gradient(90deg, rgba(79, 140, 255, 0.07), transparent 75%);
+  color: var(--text-muted); font-size: 17px;
+}
+.assure svg { flex: none; fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.assure strong { color: var(--text); font-weight: 600; }
+
+@media (max-width: 960px) { .factors { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .factors { grid-template-columns: 1fr; } }

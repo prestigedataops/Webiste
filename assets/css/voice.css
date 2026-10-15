@@ -1,0 +1,74 @@
+/* AI Voice Agent section (homepage). Same card style, accents and motion as the rest of the site. */
+
+.voice__top { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.voice__intro { margin-top: 20px; max-width: 46ch; color: var(--text-muted); font-size: clamp(17px, 2vw, 19px); line-height: 1.6; }
+.voice__cta { margin-top: 28px; }
+
+/* Call panel: labels only, no sample data */
+.voice__panel { padding: clamp(22px, 3vw, 32px); position: relative; overflow: hidden; }
+.voice__panel::before {
+  content: ""; position: absolute; right: -20%; top: -40%; width: 70%; aspect-ratio: 1; pointer-events: none;
+  background: radial-gradient(circle, rgba(79, 140, 255, 0.2), transparent 65%);
+}
+.voice__call { position: relative; display: flex; align-items: center; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.voice__ring {
+  position: relative; flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+  border: 1px solid rgba(79, 140, 255, 0.45); background: rgba(79, 140, 255, 0.12);
+}
+.voice__ring svg, .voice__icon svg { stroke: #a8c6ff; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.voice__ring::after {
+  content: ""; position: absolute; inset: -1px; border-radius: 50%; border: 1px solid rgba(79, 140, 255, 0.5);
+  animation: voice-ping 2.8s ease-out infinite;
+}
+@keyframes voice-ping { from { transform: scale(1); opacity: 0.7; } to { transform: scale(1.6); opacity: 0; } }
+.voice__call-title { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+.voice__call-sub { margin-top: 2px; color: var(--text-muted); font-size: 14px; }
+.voice__fields { position: relative; margin-top: 8px; }
+.voice__fields li { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.voice__fields span { color: var(--text-muted); }
+.voice__fields i { display: block; width: clamp(80px, 38%, 150px); height: 8px; border-radius: 8px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04)); }
+.voice__check { position: relative; margin-top: 18px; display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; }
+.voice__check svg { flex: none; fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+.voice__sub { margin-top: clamp(40px, 6vw, 64px); font-family: var(--font-label); font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+
+/* Benefit cards */
+.voice__cards { margin-top: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.voice__card { position: relative; padding: 28px 28px 32px; }
+.voice__icon {
+  display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px;
+  border: 1px solid rgba(79, 140, 255, 0.4); background: rgba(79, 140, 255, 0.1);
+}
+.voice__card h4 { margin-top: 24px; font-size: 22px; line-height: 1.2; letter-spacing: -0.015em; font-weight: 600; }
+.voice__card p { margin-top: 10px; color: var(--text-muted); font-size: 16px; }
+
+/* How it works: three steps joined by a thin line */
+.voice__steps { margin-top: 24px; position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: none; }
+.voice__steps::before { content: ""; position: absolute; left: 24px; right: 24px; top: 24px; height: 1px; background: linear-gradient(90deg, var(--accent), var(--line-strong) 60%, transparent); }
+.voice__steps li { position: relative; padding-right: 16px; }
+.voice__num {
+  position: relative; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+  background: var(--bg); border: 1.5px solid var(--cool, var(--accent)); box-shadow: 0 0 0 6px rgba(79, 140, 255, 0.12);
+  font-family: var(--font-label); font-weight: 600; font-size: 13px; letter-spacing: 0.06em;
+}
+.voice__steps h4 { margin-top: 20px; font-size: 22px; line-height: 1.2; letter-spacing: -0.015em; font-weight: 600; }
+.voice__steps p { margin-top: 8px; max-width: 32ch; color: var(--text-muted); font-size: 16px; }
+
+/* HVAC / home services line */
+.voice__note {
+  margin-top: clamp(36px, 5vw, 56px); padding: 22px 28px; border-radius: 14px; border: 1px solid var(--line);
+  border-left: 2px solid rgba(79, 140, 255, 0.55); background: linear-gradient(90deg, rgba(79, 140, 255, 0.07), transparent 75%);
+  color: var(--text-muted); font-size: 17px; max-width: 80ch;
+}
+.voice__note strong { color: var(--text); font-weight: 600; }
+
+@media (max-width: 860px) {
+  .voice__top { grid-template-columns: 1fr; }
+  .voice__cards { grid-template-columns: 1fr; }
+  .voice__steps { grid-template-columns: 1fr; gap: 28px; }
+  .voice__steps::before { left: 24px; right: auto; top: 24px; bottom: 24px; width: 1px; height: auto; background: linear-gradient(180deg, var(--accent), var(--line-strong)); }
+  .voice__steps li { display: grid; grid-template-columns: 48px 1fr; column-gap: 20px; padding-right: 0; }
+  .voice__num { grid-row: 1 / span 2; }
+  .voice__steps h4 { margin-top: 0; }
+  .voice__steps p { margin-top: 6px; }
+}

@@ -41,7 +41,7 @@
 }
 
 /* Very small phones (320-380px): keep logo, CTA and menu button inside the screen */
-@media (max-width: 380px) {
+@media (max-width: 440px) {
   .site-header__bar { gap: 8px; }
   .site-header__actions { gap: 6px; }
   .site-header__actions .btn--sm { padding: 0 14px; font-size: 13.5px; }
@@ -52,7 +52,7 @@
 /* Keep the logo on one line at every width */
 .site-header .brand { white-space: nowrap; flex: none; }
 @media (max-width: 380px) {
-  .brand__mark { width: 22px; height: 22px; }
+  .brand__mark { width: 95px; height: 38px; }
   .site-header .brand { font-size: 15px; }
 }
 

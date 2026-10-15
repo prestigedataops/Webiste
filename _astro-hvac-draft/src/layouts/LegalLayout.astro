@@ -1,0 +1,26 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+
+interface Props { title: string; description: string; heading: string; updated: string }
+const { title, description, heading, updated } = Astro.props;
+---
+
+<BaseLayout {title} {description}>
+  <PageHero eyebrow="Legal" title={heading} lede={`Last updated ${updated}`} />
+  <section class="section theme-light">
+    <div class="container prose">
+      <slot />
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .prose { max-width: 720px; }
+  .prose h2 { font-family: var(--font-display); font-weight: 400; font-size: 32px; line-height: 1.15; margin: 48px 0 12px; }
+  .prose h2:first-child { margin-top: 0; }
+  .prose p, .prose li { color: var(--fg-muted); }
+  .prose p + p { margin-top: 14px; }
+  .prose ul { margin: 12px 0; display: grid; gap: 8px; padding-left: 20px; list-style: disc; }
+  .prose a { color: var(--accent-text); border-bottom: 1px solid currentColor; }
+</style>

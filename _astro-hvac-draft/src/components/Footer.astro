@@ -1,0 +1,48 @@
+---
+import Brand from "./Brand.astro";
+import { SITE, FOOTER_COLUMNS } from "../data/site.js";
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer theme-dark">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="site-footer__intro">
+        <Brand />
+        <p class="site-footer__blurb">{SITE.descriptor}. Every call answered, every lead followed up, every customer brought back.</p>
+        <a class="site-footer__mail" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </div>
+
+      {
+        FOOTER_COLUMNS.map((col) => (
+          <nav aria-label={col.title}>
+            <p class="site-footer__title">{col.title}</p>
+            <ul>
+              {col.links.map((l) => (
+                <li><a href={l.href}>{l.label}</a></li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+
+    <p class="site-footer__legal">© {year} {SITE.name}. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--bg); color: var(--fg); border-top: 1px solid var(--line); padding: clamp(56px, 8vw, 96px) 0 40px; }
+  .site-footer__grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 48px 32px; }
+  .site-footer__blurb { margin-top: 20px; color: var(--fg-muted); max-width: 36ch; font-size: 16px; }
+  .site-footer__mail { display: inline-block; margin-top: 16px; border-bottom: 1px solid var(--accent); padding-bottom: 2px; font-size: 15px; }
+  .site-footer__title { font-size: 12.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+  .site-footer ul { margin-top: 18px; display: grid; gap: 10px; }
+  .site-footer li a { color: var(--fg-muted); font-size: 15.5px; transition: color 0.2s; }
+  .site-footer li a:hover { color: var(--fg); }
+  .site-footer__legal { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--fg-muted); font-size: 14px; }
+  @media (max-width: 860px) {
+    .site-footer__grid { grid-template-columns: 1fr 1fr; }
+    .site-footer__intro { grid-column: 1 / -1; }
+  }
+</style>

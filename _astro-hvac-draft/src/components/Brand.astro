@@ -1,0 +1,26 @@
+---
+interface Props { class?: string }
+const { class: className = "" } = Astro.props;
+---
+
+<span class:list={["brand", className]}>
+  <span class="brand__mark" aria-hidden="true"></span>
+  <span class="brand__text">
+    <span class="brand__name">Prestige</span>
+    <span class="brand__sub">DataOps</span>
+  </span>
+</span>
+
+<style>
+  .brand { display: inline-flex; align-items: center; gap: 12px; }
+  .brand__mark {
+    position: relative; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--brass); flex: none;
+  }
+  .brand__mark::after {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px;
+    border-radius: 50%; background: var(--brass);
+  }
+  .brand__text { display: inline-flex; align-items: baseline; gap: 8px; }
+  .brand__name { font-family: var(--font-display); font-size: 25px; letter-spacing: -0.01em; line-height: 1; }
+  .brand__sub { font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-muted); }
+</style>

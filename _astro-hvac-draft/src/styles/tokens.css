@@ -1,0 +1,49 @@
+/* Design tokens: the single source of truth for colour, type, spacing and motion. */
+:root {
+  /* Palette */
+  --ink: #0b1220;
+  --ink-2: #121b2e;
+  --ivory: #f6f2ea;
+  --paper: #ffffff;
+  --brass: #b89b5e;
+  --brass-deep: #7a6230; /* brass text on ivory/paper, AA contrast */
+  --frost: #dce6ee;
+
+  /* Typography */
+  --font-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Layout */
+  --container: 1200px;
+  --gutter: clamp(20px, 5vw, 40px);
+  --header-h: 76px;
+  --section-y: clamp(72px, 10vw, 136px);
+  --radius: 6px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Section themes switch these semantic variables. Components only use the semantic ones. */
+.theme-dark {
+  --bg: var(--ink);
+  --bg-alt: var(--ink-2);
+  --fg: #f3efe6;
+  --fg-muted: #aab2c1; /* 8:1 on ink */
+  --line: rgba(243, 239, 230, 0.14);
+  --accent: var(--brass);
+  --accent-text: var(--brass);
+  --btn-bg: var(--brass);
+  --btn-fg: var(--ink);
+}
+.theme-light {
+  --bg: var(--ivory);
+  --bg-alt: var(--paper);
+  --fg: #101829;
+  --fg-muted: #4a5568; /* 7:1 on ivory */
+  --line: rgba(16, 24, 41, 0.14);
+  --accent: var(--brass);
+  --accent-text: var(--brass-deep);
+  --btn-bg: var(--ink);
+  --btn-fg: var(--ivory);
+}

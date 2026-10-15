@@ -15,7 +15,7 @@ import re
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # Order matters: later files override earlier ones.
-CSS = ["tokens", "vertical", "base", "layout", "components", "header", "hero", "sections", "home", "forms", "pages", "hero-bg", "motion"]
+CSS = ["tokens", "vertical", "base", "layout", "components", "header", "hero", "sections", "home", "forms", "pages", "hero-bg", "motion", "voice", "industries", "pricing", "polish"]
 JS = ["header", "reveal", "faq", "audit-form", "motion"]
 
 

@@ -1,0 +1,30 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { SITE } from "../data/site.js";
+---
+
+<!-- TODO: DRAFT. Have counsel review these terms before launch. -->
+<LegalLayout
+  title="Terms of Use | Prestige DataOps"
+  description="Terms governing use of the Prestige DataOps website."
+  heading="Terms of Use"
+  updated="October 12, 2026"
+>
+  <h2>Use of this site</h2>
+  <p>This website provides general information about Prestige DataOps and its services. By using it you agree to use it lawfully and not to interfere with its operation.</p>
+
+  <h2>No advice</h2>
+  <p>Content on this site is for general information only and is not legal, regulatory or compliance advice. Rules on call recording, text messaging and automated calls vary by state and change over time. Please consult your own counsel.</p>
+
+  <h2>Services</h2>
+  <p>Services are provided under a separate written agreement that sets out scope, fees and responsibilities. Descriptions on this site do not form a contract.</p>
+
+  <h2>Intellectual property</h2>
+  <p>Site content, design and branding belong to Prestige DataOps unless stated otherwise. Work delivered to clients is governed by the applicable client agreement.</p>
+
+  <h2>Liability</h2>
+  <p>This site is provided “as is”. To the extent permitted by law, Prestige DataOps is not liable for losses arising from its use.</p>
+
+  <h2>Contact</h2>
+  <p>Questions: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+</LegalLayout>

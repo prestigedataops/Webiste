@@ -1,0 +1,45 @@
+/* Shared layout primitives and components used across pages. */
+
+.container { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+
+.section { background: var(--bg); color: var(--fg); padding: var(--section-y) 0; scroll-margin-top: var(--header-h); }
+.section--alt { background: var(--bg-alt); }
+
+/* Eyebrow: small-caps label with a brass rule */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: 12.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text);
+}
+.eyebrow::before { content: ""; width: 32px; height: 1px; background: currentColor; }
+
+.display {
+  font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; line-height: 1.04; text-wrap: balance;
+}
+.h-section { font-size: clamp(38px, 5.4vw, 64px); max-width: 18ch; margin-top: 20px; }
+.h-section em, .display em { font-style: italic; color: var(--accent-text); }
+.lede { color: var(--fg-muted); font-size: clamp(18px, 1.6vw, 20px); line-height: 1.65; max-width: 56ch; text-wrap: pretty; }
+.muted { color: var(--fg-muted); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 28px; border-radius: var(--radius);
+  background: var(--btn-bg); color: var(--btn-fg); border: 1px solid transparent;
+  font-size: 15px; font-weight: 600; letter-spacing: 0.01em;
+  transition: transform 0.25s var(--ease), background 0.25s, color 0.25s, border-color 0.25s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn--ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn--ghost:hover { border-color: var(--accent); color: var(--fg); }
+.btn--sm { min-height: 42px; padding: 0 20px; font-size: 14px; }
+.btn--block { display: flex; width: 100%; }
+.btn .arrow { transition: transform 0.25s var(--ease); }
+.btn:hover .arrow { transform: translateX(3px); }
+
+/* Hairline-ruled rows (editorial list) */
+.rows { border-top: 1px solid var(--line); }
+.rows > * { border-bottom: 1px solid var(--line); }
+
+/* Reveal on scroll: hidden only while JS runs, so crawlers and no-JS users see everything */
+.js [data-reveal] { opacity: 0; transform: translateY(18px); }
+.js [data-reveal].is-visible { opacity: 1; transform: none; transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); transition-delay: calc(var(--i, 0) * 80ms); }

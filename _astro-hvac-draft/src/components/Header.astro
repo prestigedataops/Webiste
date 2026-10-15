@@ -1,0 +1,67 @@
+---
+import Brand from "./Brand.astro";
+import { NAV } from "../data/site.js";
+---
+
+<header class="site-header theme-dark" data-header>
+  <div class="container site-header__bar">
+    <a class="site-header__brand" href="/" aria-label="Prestige DataOps, AI automation for HVAC companies. Home">
+      <Brand />
+    </a>
+
+    <nav class="site-header__nav" aria-label="Primary">
+      {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="btn btn--sm" href="/book/" data-track="book_click" data-track-location="header">Book your audit</a>
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile" hidden>
+    {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; color: var(--fg);
+    background: transparent; border-bottom: 1px solid transparent;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .site-header.is-solid {
+    background: rgba(11, 18, 32, 0.9);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    border-bottom-color: var(--line);
+  }
+  .site-header__bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: var(--header-h); }
+  .site-header__nav { display: flex; gap: 36px; margin-left: auto; margin-right: 12px; }
+  .site-header__nav a {
+    font-size: 14.5px; color: var(--fg-muted); transition: color 0.2s; padding: 8px 0;
+  }
+  .site-header__nav a:hover { color: var(--fg); }
+  .site-header__actions { display: flex; align-items: center; gap: 12px; }
+
+  .menu-toggle {
+    display: none; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    width: 44px; height: 44px; padding: 0; background: transparent; border: 1px solid var(--line); border-radius: var(--radius);
+  }
+  .menu-toggle span { display: block; width: 18px; height: 1.5px; background: var(--fg); }
+
+  .mobile-menu { display: none; flex-direction: column; padding: 8px var(--gutter) 28px; border-top: 1px solid var(--line); }
+  .mobile-menu a {
+    padding: 18px 0; font-family: var(--font-display); font-size: 30px; letter-spacing: -0.01em; border-bottom: 1px solid var(--line);
+  }
+
+  @media (max-width: 860px) {
+    .site-header__nav { display: none; }
+    .site-header__actions .btn { display: none; }
+    .menu-toggle { display: inline-flex; }
+    .site-header__bar { margin-right: 0; }
+    .mobile-menu:not([hidden]) { display: flex; }
+    .site-header { background: rgba(11, 18, 32, 0.9); }
+  }
+</style>

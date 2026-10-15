@@ -1,0 +1,43 @@
+---
+interface Props { items: { q: string; a: string }[] }
+const { items } = Astro.props;
+---
+
+<div class="faq">
+  {
+    items.map((item, i) => (
+      <div class="faq__item">
+        <h3 class="faq__q">
+          <button class="faq__trigger" type="button" id={`faq-q${i}`} data-faq-trigger aria-expanded="false" aria-controls={`faq-a${i}`}>
+            <span>{item.q}</span>
+            <span class="faq__icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="faq__panel" id={`faq-a${i}`} role="region" aria-labelledby={`faq-q${i}`}>
+          <div><p class="faq__a">{item.a}</p></div>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .faq { border-top: 1px solid var(--line); }
+  .faq__item { border-bottom: 1px solid var(--line); }
+  .faq__q { font-size: inherit; font-weight: inherit; }
+  .faq__trigger {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    padding: 26px 0; background: none; border: 0; text-align: left;
+    font-family: var(--font-display); font-size: clamp(22px, 2.4vw, 28px); line-height: 1.2; color: var(--fg);
+  }
+  .faq__icon { position: relative; flex: none; width: 18px; height: 18px; }
+  .faq__icon::before, .faq__icon::after { content: ""; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: var(--accent); transition: transform 0.3s var(--ease); }
+  .faq__icon::after { transform: rotate(90deg); }
+  .faq__item.is-open .faq__icon::after { transform: rotate(0deg); }
+  .faq__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease; }
+  .faq__item.is-open .faq__panel { grid-template-rows: 1fr; }
+  .faq__panel > div { overflow: hidden; min-height: 0; }
+  .faq__a { padding: 0 48px 28px 0; color: var(--fg-muted); max-width: 62ch; }
+  /* Without JS every answer stays visible */
+  :global(html:not(.js)) .faq__panel { grid-template-rows: 1fr; }
+</style>

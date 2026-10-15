@@ -1,0 +1,19 @@
+---
+/** Compact dark hero for inner pages (pricing, book, legal). */
+interface Props { eyebrow: string; title: string; lede?: string }
+const { eyebrow, title, lede } = Astro.props;
+---
+
+<section class="page-hero theme-dark">
+  <div class="container">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 class="display page-hero__title">{title}</h1>
+    {lede && <p class="lede page-hero__lede">{lede}</p>}
+  </div>
+</section>
+
+<style>
+  .page-hero { background: var(--bg); color: var(--fg); padding: calc(var(--header-h) + clamp(56px, 8vw, 104px)) 0 clamp(48px, 6vw, 80px); }
+  .page-hero__title { margin-top: 20px; font-size: clamp(44px, 6.6vw, 84px); max-width: 16ch; }
+  .page-hero__lede { margin-top: 24px; }
+</style>

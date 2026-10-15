@@ -6,13 +6,12 @@
   font-weight: 600; font-size: 18px; letter-spacing: -0.015em; border-radius: 8px;
 }
 .brand__mark {
-  position: relative; display: inline-block; width: 24px; height: 24px;
-  border-radius: 50%; border: 1.5px solid var(--text);
+  display: inline-block; width: 112px; height: 45px; flex: none;
+  background: url("../img/pdo-logo.png") left center / contain no-repeat;
 }
-.brand__mark::after {
-  content: ""; position: absolute; left: 50%; top: 50%; width: 6px; height: 6px;
-  margin: -3px 0 0 -3px; border-radius: 50%;
-  background: var(--accent); box-shadow: 0 0 12px var(--accent);
+/* The logo image already contains the wordmark; keep the text for screen readers only */
+.brand__mark + span {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
 }
 .brand__sub { color: var(--text-muted); font-weight: 500; }
 

@@ -1,0 +1,142 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { SITE } from "../data/site.js";
+import { TRUCK_SIZES, FSM_OPTIONS } from "../data/content.js";
+
+const title = "Book a Free Missed-Call Audit | Prestige DataOps";
+const description =
+  "Book a free 30-minute audit for your HVAC company. See where calls and leads are being lost and what to automate first.";
+---
+
+<BaseLayout {title} {description}>
+  <PageHero
+    eyebrow="Free audit"
+    title="Find the jobs you are losing."
+    lede="Tell us a little about your company. In 30 minutes you get a clear list of what to automate first, whether or not we work together."
+  />
+
+  <section class="section theme-light" aria-label="Booking form">
+    <div class="container book">
+      <aside class="book__aside">
+        <h2 class="display book__h">What happens next</h2>
+        <ol class="book__steps">
+          <li><span>01</span>We review your details and reply within one business day.</li>
+          <li><span>02</span>We hold a 30-minute call about how calls and leads are handled today.</li>
+          <li><span>03</span>You receive a short written summary of the biggest opportunities.</li>
+        </ol>
+        {
+          SITE.bookingUrl && (
+            <a class="btn btn--ghost book__cal" href={SITE.bookingUrl} data-track="calendar_click" data-track-location="book_page">
+              Or pick a time directly <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          )
+        }
+        <p class="muted book__mail">Prefer email? <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+      </aside>
+
+      <form class="form" id="book-form" novalidate data-endpoint={SITE.formEndpoint} data-email={SITE.email}>
+        <div class="form__row">
+          <label>Name<input name="name" type="text" required autocomplete="name" /></label>
+          <label>Company<input name="company" type="text" required autocomplete="organization" /></label>
+        </div>
+        <div class="form__row">
+          <label>Work email<input name="email" type="email" required autocomplete="email" /></label>
+          <label>Phone<input name="phone" type="tel" required autocomplete="tel" /></label>
+        </div>
+        <div class="form__row">
+          <label>
+            Company size
+            <select name="size" required>
+              <option value="" disabled selected>Select</option>
+              {TRUCK_SIZES.map((o) => <option>{o}</option>)}
+            </select>
+          </label>
+          <label>
+            Field-service software
+            <select name="software">
+              <option value="" disabled selected>Select</option>
+              {FSM_OPTIONS.map((o) => <option>{o}</option>)}
+            </select>
+          </label>
+        </div>
+        <label>
+          What would you like to fix first? <span class="muted">(optional)</span>
+          <textarea name="message" rows="4"></textarea>
+        </label>
+        <button class="btn btn--block" type="submit" data-track="form_submit" data-track-location="book_form">
+          Request my free audit <span class="arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="form__status" role="status" aria-live="polite"></p>
+        <p class="form__legal muted">We use your details only to respond to this request. See our <a href="/privacy/">privacy policy</a>.</p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById("book-form") as HTMLFormElement | null;
+  if (form) {
+    const status = form.querySelector(".form__status") as HTMLElement;
+    const submit = form.querySelector("button[type=submit]") as HTMLButtonElement;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+      const endpoint = form.dataset.endpoint;
+      submit.disabled = true;
+      status.textContent = "Sending…";
+
+      try {
+        if (endpoint) {
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error(String(res.status));
+          form.reset();
+          status.textContent = "Thank you. We will reply within one business day.";
+        } else {
+          // No form endpoint configured yet: fall back to the visitor's email app.
+          const body = Object.entries(data).map(([k, v]) => `${k}: ${v}`).join("\n");
+          window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent("Free audit request")}&body=${encodeURIComponent(body)}`;
+          status.textContent = "Your email app should open with the request ready to send.";
+        }
+      } catch {
+        status.textContent = `Something went wrong. Please email ${form.dataset.email} directly.`;
+      } finally {
+        submit.disabled = false;
+      }
+    });
+  }
+</script>
+
+<style>
+  .book { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(40px, 7vw, 96px); align-items: start; }
+  .book__h { font-size: clamp(32px, 3.6vw, 44px); }
+  .book__steps { margin-top: 28px; display: grid; gap: 22px; border-top: 1px solid var(--line); padding-top: 28px; }
+  .book__steps li { display: grid; grid-template-columns: 44px 1fr; gap: 8px; color: var(--fg-muted); }
+  .book__steps span { font-family: var(--font-display); font-size: 20px; color: var(--accent-text); }
+  .book__cal { margin-top: 32px; }
+  .book__mail { margin-top: 24px; font-size: 15px; }
+  .book__mail a { border-bottom: 1px solid var(--line); }
+
+  .form { display: grid; gap: 20px; padding: clamp(24px, 4vw, 40px); background: var(--paper); border: 1px solid var(--line); border-radius: 10px; }
+  .form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form label { display: grid; gap: 8px; font-size: 13.5px; font-weight: 600; letter-spacing: 0.02em; }
+  .form input, .form select, .form textarea {
+    width: 100%; min-height: 50px; padding: 12px 14px; border: 1px solid rgba(16, 24, 41, 0.28); border-radius: var(--radius);
+    background: var(--ivory); font-size: 16px; font-weight: 400; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form textarea { resize: vertical; min-height: 110px; }
+  .form input:focus, .form select:focus, .form textarea:focus { outline: none; border-color: var(--brass-deep); box-shadow: 0 0 0 3px rgba(184, 155, 94, 0.3); }
+  .form__status { min-height: 1.4em; font-size: 15px; }
+  .form__legal { font-size: 13.5px; }
+  .form__legal a { border-bottom: 1px solid var(--line); }
+  @media (max-width: 860px) { .book { grid-template-columns: 1fr; } .form__row { grid-template-columns: 1fr; } }
+</style>

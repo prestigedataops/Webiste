@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { PLANS } from "../data/content.js";
+
+const title = "Pricing | AI Automation for HVAC Companies | Prestige DataOps";
+const description =
+  "Fixed-scope pricing for HVAC automation: call answering, lead follow-up and maintenance-agreement workflows. Every project starts with a free audit.";
+---
+
+<BaseLayout {title} {description}>
+  <PageHero
+    eyebrow="Pricing"
+    title="Fixed scope. Clear price."
+    lede="Every project starts with a free audit and a written scope, so you know the cost and the outcome before we build anything."
+  />
+
+  <section class="section theme-light" aria-label="Plans">
+    <div class="container">
+      <div class="plans">
+        {
+          PLANS.map((plan) => (
+            <article class:list={["plan", { "plan--featured": plan.featured }]} data-reveal>
+              <header class="plan__head">
+                <h2 class="plan__name">{plan.name}</h2>
+                {plan.badge && <span class="plan__badge">{plan.badge}</span>}
+              </header>
+              <p class="muted">{plan.tagline}</p>
+              <p class="plan__price">
+                {plan.prefix && <small>{plan.prefix} </small>}
+                {plan.price}
+              </p>
+              <p class="plan__billing">{plan.billing}</p>
+              <ul class="plan__features">
+                {plan.features.map((f) => <li>{f}</li>)}
+              </ul>
+              <a class:list={["btn btn--block", { "btn--ghost": !plan.featured }]} href="/book/" data-track="plan_click" data-track-location={plan.name}>
+                {plan.cta}
+              </a>
+            </article>
+          ))
+        }
+      </div>
+      <p class="plans__note muted">Prices in USD. Final scope and price are confirmed in writing after your audit.</p>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+  .plan { display: flex; flex-direction: column; padding: 36px 32px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; }
+  .plan--featured { background: var(--ink); color: #f3efe6; border-color: var(--ink); --fg-muted: #aab2c1; --line: rgba(243, 239, 230, 0.16); --accent-text: var(--brass); }
+  .plan--featured .btn { background: var(--brass); color: var(--ink); }
+  .plan__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .plan__name { font-family: var(--font-display); font-weight: 400; font-size: 36px; line-height: 1; }
+  .plan__badge { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); border: 1px solid var(--brass); border-radius: 999px; padding: 4px 12px; }
+  .plan__price { margin-top: 32px; font-family: var(--font-display); font-size: 58px; line-height: 1; letter-spacing: -0.02em; }
+  .plan__price small { font-family: var(--font-sans); font-size: 15px; letter-spacing: 0; color: var(--fg-muted); }
+  .plan__billing { margin-top: 8px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-muted); }
+  .plan__features { margin: 32px 0; padding-top: 28px; border-top: 1px solid var(--line); display: grid; gap: 14px; flex: 1; align-content: start; }
+  .plan__features li { display: flex; gap: 12px; font-size: 16px; }
+  .plan__features li::before { content: ""; flex: none; width: 14px; height: 1px; margin-top: 13px; background: var(--brass); }
+  .plans__note { margin-top: 28px; font-size: 15px; }
+  @media (max-width: 960px) { .plans { grid-template-columns: 1fr; } }
+</style>

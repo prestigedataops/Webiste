@@ -1,0 +1,10 @@
+{
+  "name": "Prestige DataOps",
+  "short_name": "Prestige",
+  "description": "AI automation for HVAC companies.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

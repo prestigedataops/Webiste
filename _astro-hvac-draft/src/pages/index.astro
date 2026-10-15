@@ -1,0 +1,237 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CallMock from "../components/CallMock.astro";
+import FaqList from "../components/FaqList.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { SITE } from "../data/site.js";
+import { PAINS, SOLUTIONS, STEPS, PRINCIPLES, FAQS } from "../data/content.js";
+
+const title = "AI Call Answering & Automation for HVAC | Prestige DataOps";
+const description =
+  "AI call answering, lead follow-up and maintenance-agreement automation for HVAC companies. Never lose a service call to voicemail. Book a free audit.";
+
+const schema = [
+  {
+    "@type": "ProfessionalService",
+    "@id": `${SITE.url}/#service`,
+    name: SITE.name,
+    url: SITE.url,
+    provider: { "@id": `${SITE.url}/#organization` },
+    serviceType: "AI automation for HVAC companies",
+    areaServed: { "@type": "Country", name: "United States" },
+    audience: { "@type": "BusinessAudience", name: "HVAC companies" },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "HVAC automation services",
+      itemListElement: SOLUTIONS.map((s) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: s.title, description: s.text },
+      })),
+    },
+  },
+  {
+    "@type": "FAQPage",
+    "@id": `${SITE.url}/#faq`,
+    mainEntity: FAQS.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
+---
+
+<BaseLayout {title} {description} {schema}>
+  <!-- Hero -->
+  <section class="hero theme-dark" aria-labelledby="hero-title">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow" data-reveal>AI automation for HVAC companies</p>
+        <h1 class="display hero__title" id="hero-title" data-reveal>
+          Every call answered.<br />Every job <em>booked.</em>
+        </h1>
+        <p class="lede hero__lede" data-reveal>
+          We build the AI front office for HVAC companies: calls answered around the clock, leads followed up in minutes, and customers brought back every season.
+        </p>
+        <div class="hero__actions" data-reveal>
+          <a class="btn" href="/book/" data-track="book_click" data-track-location="hero">
+            Get your free missed-call audit <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn--ghost" href="#how-it-works">See how it works</a>
+        </div>
+      </div>
+      <div class="hero__visual" data-reveal>
+        <CallMock />
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="section theme-light" aria-labelledby="problem-title">
+    <div class="container">
+      <p class="eyebrow" data-reveal>The problem</p>
+      <h2 class="display h-section problem__title" id="problem-title" data-reveal>
+        The call you miss at 9:42 PM is a job your competitor <em>books.</em>
+      </h2>
+      <div class="rows problem__rows">
+        {
+          PAINS.map((p) => (
+            <article class="problem__row" data-reveal>
+              <h3 class="problem__name">{p.title}</h3>
+              <p class="muted">{p.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions -->
+  <section class="section section--alt theme-light" id="solutions" aria-labelledby="solutions-title">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Solutions</p>
+      <h2 class="display h-section" id="solutions-title" data-reveal>Five ways we <em>win back</em> your time and your jobs</h2>
+      <ol class="rows solutions__rows">
+        {
+          SOLUTIONS.map((s) => (
+            <li class="solution" data-reveal>
+              <span class="solution__n" aria-hidden="true">{s.n}</span>
+              <h3 class="solution__title">{s.title}</h3>
+              <p class="muted solution__text">{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section theme-dark" id="how-it-works" aria-labelledby="how-title">
+    <div class="container">
+      <p class="eyebrow" data-reveal>How it works</p>
+      <h2 class="display h-section" id="how-title" data-reveal>A clear path from <em>audit</em> to results</h2>
+      <ol class="steps">
+        {
+          STEPS.map((s) => (
+            <li class="step" data-reveal>
+              <span class="step__n">{s.n}</span>
+              <h3 class="step__title">{s.title}</h3>
+              <p class="muted">{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Trust: principles + stack -->
+  <section class="section theme-light" aria-labelledby="trust-title">
+    <div class="container trust">
+      <div>
+        <p class="eyebrow" data-reveal>Built for trust</p>
+        <h2 class="display h-section" id="trust-title" data-reveal>Your customers deserve a <em>careful</em> first impression</h2>
+        <p class="lede trust__lede" data-reveal>
+          It works alongside the tools you already run: field-service software, phone systems, calendars, accounting and your Google Business Profile.
+        </p>
+        <!-- TODO: once integrations are confirmed, list real platform names/logos here (ServiceTitan, Housecall Pro, etc.). -->
+      </div>
+      <dl class="principles">
+        {
+          PRINCIPLES.map((p) => (
+            <div class="principle" data-reveal>
+              <dt>{p.title}</dt>
+              <dd class="muted">{p.text}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- Pricing teaser -->
+  <section class="section section--alt theme-light" aria-labelledby="pricing-title">
+    <div class="container teaser">
+      <div>
+        <p class="eyebrow" data-reveal>Pricing</p>
+        <h2 class="display h-section" id="pricing-title" data-reveal>Fixed scope. <em>Clear</em> price.</h2>
+      </div>
+      <div class="teaser__side" data-reveal>
+        <p class="lede">Every project starts with a free audit and a written scope, so you know the cost before we build.</p>
+        <a class="btn" href="/pricing/" data-track="pricing_click" data-track-location="home">See pricing <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section theme-light" id="faq" aria-labelledby="faq-title">
+    <div class="container faq-layout">
+      <div>
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="display h-section" id="faq-title" data-reveal>Good <em>questions,</em> straight answers</h2>
+      </div>
+      <div data-reveal><FaqList items={FAQS} /></div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero { background: var(--bg); color: var(--fg); padding: calc(var(--header-h) + clamp(48px, 7vw, 96px)) 0 clamp(72px, 9vw, 128px); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(60% 50% at 85% 20%, rgba(184, 155, 94, 0.12), transparent 70%);
+  }
+  .hero__grid { position: relative; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(40px, 6vw, 88px); align-items: center; }
+  .hero__title { margin-top: 24px; font-size: clamp(46px, 6vw, 88px); }
+  .hero__lede { margin-top: 28px; }
+  .hero__actions { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 14px; }
+
+  /* Problem */
+  .problem__title { max-width: 22ch; }
+  .problem__rows { margin-top: 64px; }
+  .problem__row { display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px 48px; padding: 36px 0; }
+  .problem__name { font-family: var(--font-display); font-weight: 400; font-size: clamp(26px, 3vw, 36px); line-height: 1.15; }
+
+  /* Solutions */
+  .solutions__rows { margin-top: 64px; }
+  .solution { display: grid; grid-template-columns: 72px 1fr 1.3fr; gap: 16px 40px; align-items: baseline; padding: 36px 0; }
+  .solution__n { font-family: var(--font-display); font-size: 22px; color: var(--accent-text); }
+  .solution__title { font-family: var(--font-display); font-weight: 400; font-size: clamp(26px, 3vw, 36px); line-height: 1.15; }
+
+  /* Steps */
+  .steps { margin-top: 64px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line); }
+  .step { padding: 32px 28px 8px 0; }
+  .step + .step { padding-left: 28px; border-left: 1px solid var(--line); }
+  .step__n { font-family: var(--font-display); font-size: 22px; color: var(--accent-text); }
+  .step__title { margin-top: 28px; font-family: var(--font-display); font-weight: 400; font-size: 34px; line-height: 1.1; }
+  .step p { margin-top: 12px; font-size: 16px; }
+
+  /* Trust */
+  .trust { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 7vw, 96px); align-items: start; }
+  .trust__lede { margin-top: 28px; }
+  .principles { display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .principle { padding: 26px 0; border-bottom: 1px solid var(--line); }
+  .principle dt { font-family: var(--font-display); font-size: 26px; line-height: 1.2; }
+  .principle dd { margin-top: 8px; font-size: 16px; }
+
+  /* Teaser + FAQ */
+  .teaser { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: end; }
+  .teaser__side { display: grid; gap: 28px; justify-items: start; }
+  .faq-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(40px, 7vw, 96px); align-items: start; }
+
+  @media (max-width: 960px) {
+    .hero__grid, .trust, .teaser, .faq-layout { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .step:nth-child(3) { padding-left: 0; border-left: 0; }
+    .step:nth-child(n + 3) { margin-top: 24px; border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 640px) {
+    .problem__row { grid-template-columns: 1fr; padding: 28px 0; gap: 10px; }
+    .solution { grid-template-columns: 1fr; gap: 8px; padding: 28px 0; }
+    .steps { grid-template-columns: 1fr; }
+    .step, .step + .step { padding: 28px 0 24px; border-left: 0; border-top: 1px solid var(--line); }
+    .step:first-child { border-top: 0; }
+  }
+</style>

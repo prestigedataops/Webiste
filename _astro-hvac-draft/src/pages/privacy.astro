@@ -1,0 +1,32 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { SITE } from "../data/site.js";
+---
+
+<!-- TODO: DRAFT. Have counsel review this policy before launch. -->
+<LegalLayout
+  title="Privacy Policy | Prestige DataOps"
+  description="How Prestige DataOps collects, uses and protects information submitted through this website."
+  heading="Privacy Policy"
+  updated="October 12, 2026"
+>
+  <h2>What we collect</h2>
+  <p>When you request an audit or email us, we collect the details you provide, such as your name, company, email address, phone number, company size, software and message.</p>
+  <p>If analytics are enabled, we also collect standard usage data such as pages viewed, device type and approximate location, through Google Analytics.</p>
+
+  <h2>How we use it</h2>
+  <ul>
+    <li>To respond to your request and schedule a call.</li>
+    <li>To understand how the site is used and improve it.</li>
+    <li>To send information you asked for. We do not sell your personal information.</li>
+  </ul>
+
+  <h2>Sharing</h2>
+  <p>We share information only with service providers who help us run the site and respond to you (for example hosting, scheduling and email), and when required by law.</p>
+
+  <h2>Retention and your choices</h2>
+  <p>We keep enquiry details only as long as needed to respond and maintain business records. You can ask us to access, correct or delete your information at any time.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+</LegalLayout>
